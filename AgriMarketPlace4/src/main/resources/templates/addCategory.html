@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Category</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+}
+
+fieldset {
+	width: 50%;
+	border: 1px solid #ccc;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+form {
+	text-align: center;
+}
+
+label {
+	font-weight: bold;
+}
+
+input[type="text"], input[type="file"] {
+	width: calc(100% - 22px);
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+	font-size: 16px;
+	display: inline-block;
+}
+
+input[type="file"] {
+	border: none;
+	background-color: #74ab4f;
+	color: #fff;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+	background-color: black;
+}
+
+.sub {
+	background-color: #74ab4f;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin-top: 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
+}
+
+.sub:hover {
+	background-color: black;
+}
+</style>
+</head>
+<body>
+	<fieldset>
+		<form th:action="@{/category}" method="post"
+			enctype="multipart/form-data">
+			<label for="category">CATEGORY:</label><br> <input type="text"
+				id="category" name="category" placeholder="Enter Category" required
+				autofocus><br>
+			<br> <label for="photo">Upload Photo:</label> <input type="file"
+				id="fileToUpload" name="fileToUpload"> <br>
+			<br> <input type="submit" value="ADD" class="sub">
+		</form>
+	</fieldset>
+</body>
+</html>

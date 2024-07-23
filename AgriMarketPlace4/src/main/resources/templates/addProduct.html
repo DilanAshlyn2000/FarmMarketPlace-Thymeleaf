@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmer Admin Dashboard</title>
+
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f0f0f0;
+}
+
+.dashboard {
+	display: flex;
+	min-height: 100vh;
+	overflow: hidden;
+}
+
+.sidebar {
+	width: 250px;
+	background: linear-gradient(to bottom, black, black);
+	padding: 20px;
+	color: white;
+	position: fixed;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.sidebar h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.sidebar ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.sidebar ul li {
+	margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+	color: white;
+	text-decoration: none;
+	display: block;
+	padding: 10px;
+	transition: all 0.3s;
+}
+
+.sidebar ul li a:hover {
+	background-color: #388E3C;
+	border-radius: 5px;
+}
+
+.main-content {
+	flex: 1;
+	position: relative;
+	overflow: hidden;
+	margin-left: 250px;
+}
+
+.main-content .image-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: -1;
+}
+
+.main-content .image-container img {
+	min-width: 100%;
+	min-height: 100%;
+	object-fit: cover;
+}
+
+.content {
+	padding: 20px;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	min-height: 80vh;
+	z-index: 1;
+}
+
+.content h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.container {
+	max-width: 400px;
+	margin: 22px auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	line-height: 0.8;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: black;
+}
+
+form {
+	display: grid;
+	gap: 10px;
+}
+
+label {
+	font-weight: bold;
+	color: #333;
+}
+
+input[type="number"], input[type="text"], textarea, select {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+textarea {
+	resize: vertical;
+}
+
+button[type="submit"] {
+	width: 100%;
+	padding: 10px;
+	background-color: #3ca40c;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+	<div class="dashboard">
+		<div class="sidebar">
+			<h4>AgriMarketPlace</h4>
+			<ul>
+				<li><a href="/displayUser"><i class="fas fa-user"></i>
+						Profile</a></li>
+				<li><a href="addProduct"><i class="fas fa-plus"></i> Add
+						Products</a></li>
+				<li><a href="/displayProduct"><i class="fas fa-eye"></i>
+						View Products</a></li>
+				<li><a href="/orderHistoryFarmer"><i class="fas fa-list"></i>
+						Order History</a></li>
+				<li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+			</ul>
+		</div>
+		<div class="main-content">
+			<div class="container">
+				<h2>Insert Product</h2>
+				<form th:action="@{/product}" method="post"
+					enctype="multipart/form-data" th:value="${product}"
+					onsubmit="return validation()">
+					<label for="farmerId">Farmer ID:</label> <input type="number"
+						id="farmerId" name="farmerId" placeholder="Enter Farmer ID"
+						min="1" pattern="[0-9]+" required th:value="${farmerId}">
+
+					<label for="productName">Product Name:</label> <input type="text"
+						id="productName" name="productName"
+						placeholder="Enter Product Name" pattern="^[a-zA-Z\s]+$" required
+						th:value="${productName}"> <label for="categoryId">Category:</label>
+					<select id="categoryId" name="categoryId" required
+						th:value="${categoryId}">
+						<option value="">Select Category</option>
+						<option value="2">Vegetables</option>
+						<option value="1">Fruits</option>
+						<option value="4">Grains &amp; Cereals</option>
+						<option value="3">Nuts</option>
+					</select> <label for="photo">Upload Photo:</label> <input type="file"
+						name="fileToUpload" id="fileToUpload"> <label
+						for="description">Description:</label>
+					<textarea id="description" name="description"
+						placeholder="Enter Description" pattern="[a-zA-Z\s]+" required
+						th:value="${description}"></textarea>
+
+					<label for="price">Price (PER KG):</label> <input type="number"
+						id="price" name="price" step="0.01" placeholder="Enter Price"
+						min="1" pattern="[0-9]+" required th:value="${price}"> <label
+						for="stockQuantity">Stock Quantity:</label> <input type="number"
+						id="stockQuantity" name="stockQuantity"
+						placeholder="Enter Stock Quantity" min="1" pattern="[0-9]+"
+						required th:value="${stockQuantity}">
+
+					<button type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+        /* Thymeleaf inline JavaScript can be added here if needed */
+        function validation() {
+            var farmerId = document.getElementById("farmerId");
+            var productName = document.getElementById("productName");
+            var description = document.getElementById("description");
+            var price = document.getElementById("price");
+            var stockQuantity = document.getElementById("stockQuantity");
+
+            if (!farmerId.checkValidity()) {
+                alert("FarmerId should be a positive number");
+                return false;
+            }
+            if (!productName.checkValidity()) {
+                alert("Product Name should be alphabetic");
+                return false;
+            }
+            if (!description.checkValidity()) {
+                alert("Description should be alphabetic");
+                return false;
+            }
+            if (!price.checkValidity()) {
+                alert("Price should be a positive number");
+                return false;
+            }
+            if (!stockQuantity.checkValidity()) {
+                alert("Stock Quantity should be a positive number");
+                return false;
+            }
+            
+            return true; 
+        }
+    </script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrimarketplace Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+        }
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px auto;
+            grid-template-rows: 100vh; 
+            grid-template-areas: "sidebar main-content";
+        }
+        .sidebar {
+            grid-area: sidebar;
+            background:black;
+            color: #fff;
+            padding: 20px;
+            height: 100vh; 
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .sidebar .logo {
+            margin-bottom: 20px;
+        }
+
+        .sidebar .logo img {
+            width: 100px; 
+            height: auto;
+            border-radius: 50%; 
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+          
+        }
+
+        .sidebar ul li a .fa {
+            margin-right: 10px;
+        }
+
+        .contact-details {
+            margin-top: auto; 
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2); 
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            width: 100%; 
+            text-align: center; 
+        }
+
+        .contact-details h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .contact-details p {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            grid-area: main-content;
+            padding: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: auto;
+                grid-template-areas: 
+                    "main-content"
+                    "sidebar";
+            }
+
+            .sidebar {
+                height: auto;
+                max-height: 60vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+        }
+        .main-content {
+            grid-area: main-content;
+            padding: 20px;
+            background-image: url('pictures/Screenshot (269).png');
+            background-size: cover;
+            background-position: center; 
+            color: #333; 
+        }      
+        .main-content {
+    grid-area: main-content;
+    padding: 20px;
+    position: relative; 
+    color: #333;
+    text-align: center; 
+}
+
+.main-content::before {
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align:center;
+    z-index: 1; 
+}
+
+.main-content h1 {
+    position: absolute;
+      background-color: rgba(16, 16, 16, 0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    color: #fff; 
+    font-size: 22px; 
+    font-weight: bold; 
+      max-width: 600px;
+    background: rgba(16, 16, 16, 0.5);;
+}
+
+  
+     
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <!-- Sidebar content -->
+            <h2>Agrimarketplace</h2>
+            <ul>
+              <li><a th:href="@{/displayUser}"><i class="fas fa-user"></i> Profile</a></li>    
+                <li><a th:href="@{/addProduct}"><i class="fas fa-plus"></i> Add Products</a></li>
+                <li><a th:href="@{/displayProduct}"><i class="fas fa-eye"></i> View Products</a></li>
+                <li><a th:href="@{/orderHistoryFarmer}"><i class="fas fa-list"></i> Order History</a></li>
+                <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+              </ul>
+            
+            <div class="contact-details">
+                <h3>Contact Details</h3>
+                <p>Email: milan01@admin.com</p>
+                <p>Phone: 9987656743</p>
+            </div>
+        </div>
+     <div class="main-content">    
+     <h1> Welcome to Farm to Market! Bridging the Gap Between Farm and Fork.</h1>
+    </div>
+</div>
+
+</body>
+</html>
+

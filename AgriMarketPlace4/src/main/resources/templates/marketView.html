@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Selection</title>
+    <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/dist/css/bootstrap.min.css}">
+    <!-- Bootstrap Icons CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.0/font/bootstrap-icons.css}">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            overflow: auto; /* Allow scrolling */
+        }
+
+        .container1 {
+            max-width: 800px;
+            margin: 47px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: calc(50% - 40px);
+            height: 236px; 
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; 
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%; /* Make image fill the card */
+            object-fit: cover; /* Ensure the entire image is visible */
+        }
+
+        .card p {
+            text-align: center;
+            padding: 10px 0;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            position: absolute;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            box-sizing: border-box;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .card:hover p {
+            opacity: 1;
+        }
+
+        input[type="image"] {
+            position: absolute;
+            top: 4px;
+            height: 58px;
+            right: 35px;
+        }
+
+        .navbar {
+            background-color: #414a5c;
+            position: relative;
+            height: 66px;
+        }
+
+        .text4 {
+            font-family: cursive;
+            text-align: center;
+            font-family: bold;
+            font-size: 30px;
+            position: relative;
+            top: 53px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">AgriMarketPlace</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav1"
+                    aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav1">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/homePageUser}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/marketView}">Market</a></li>
+                    <li class="nav-item"><a class="nav-link" th:onclick="toggleOrderHistory()">Order History</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">More info</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/ourPeople}">Our Team</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ourCommunity}">Our Company</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="text4">
+    <h2>
+        <font color="#6f6e6c">C</font> <font color="">A</font> <font
+        color="#6f6e6c">T</font> <font color="#74ab4f">E</font> <font
+        color="#74ab4f">G</font> <font color="#74ab4f">O</font> <font
+        color="#74ab4f">R</font> <font color="#74ab4f">I</font> <font
+        color="#74ab4f">E</font> <font color="#74ab4f">S</font>
+    </h2>
+</div>
+
+<div class="container1">
+    <div class="card" th:onclick="|selectCategory(2)|">
+     <img src=https://cdn.pixabay.com/photo/2016/10/25/13/16/pumpkin-1768857_1280.jpg alt="Vegetables">
+			 <p>VEGETABLES</p>
+    </div>
+    <div class="card" th:onclick="|selectCategory(1)|">
+        <img src=https://cdn.pixabay.com/photo/2015/12/30/11/57/fruits-1114060_1280.jpg alt="Fruits">
+			<p>FRUITS</p>
+    </div>
+    <div class="card" th:onclick="|selectCategory(4)|">
+       <img src=https://st5.depositphotos.com/14096468/67729/i/450/depositphotos_677297868-stock-photo-different-types-legumes-bowls-green.jpg alt="Flowers">
+			 <p>GRAINS & CEREALS</p>
+    </div>
+    <div class="card" th:onclick="|selectCategory(3)|">
+       <img src=https://media.istockphoto.com/id/639201332/photo/composition-with-dried-fruits-and-assorted-nuts.jpg?s=612x612&w=0&k=20&c=5Zj_z3volaNDfqWi-qp5_49d-0KWRfVjnnAEYHdE2YI= alt="Grains & Cereals">
+			<p>NUTS</p>
+    </div>
+</div>
+
+<form th:action="@{/CartView}" method="get">
+    <input type="image" th:src="@{/pictures/33.png}" alt="Submit">
+</form>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/5.3.0/dist/js/bootstrap.bundle.min.js}"></script>
+<script>
+    function selectCategory(categoryId) {
+        window.location.href = '/searchCategory?type=' + categoryId;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Admin Dashboard</title>
+  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden; 
+        }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, #3ca40c, #3ca40c);
+            padding: 20px;
+            color: white;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #388E3C;
+            border-radius: 5px;
+        }
+
+        .main-content {
+            flex: 1;
+            position: relative;
+            overflow: hidden; 
+            margin-left: 250px; 
+        }
+
+        .main-content .image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1; 
+        }
+
+        .main-content .image-container img {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            min-height: 80vh; 
+            z-index: 1; 
+        }
+
+        .content h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .order-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .order-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .product {
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white; 
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product:hover {
+            transform: scale(1.01);
+        }
+
+        .product-image {
+            width: 265px;
+            height: 155px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 20px; 
+        }
+
+        .product-details {
+            color: #555;
+        }
+
+        .product-details div {
+            margin-bottom: 5px; 
+        }
+
+        .total-bill {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .no-items {
+            text-align: center;
+            color: #555;
+            font-size: 18px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button2 {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 19%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h4>AgriMarketPlace</h4>
+            <ul>
+                <li><a th:href="@{/displayUser}"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a th:href="@{/addProduct}"><i class="fas fa-plus"></i> Add Products</a></li>
+                <li><a th:href="@{/displayProduct}"><i class="fas fa-eye"></i> View Products</a></li>
+                <li><a th:href="@{/orderHistoryFarmer}"><i class="fas fa-list"></i> Order History</a></li>
+                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="container">
+                <div class="order-container">
+                    <div class="order-header">Order History</div>
+                    <div class="order-details">
+                        <div th:if="${#lists.isEmpty(productList)}" class="no-items">No items in the order history</div>
+                        <div th:each="cartItem : ${productList}" class="product">
+                           <img th:src="'data:image/jpeg;base64,' + ${(cartItem.product.productImage)}" class="product-image" alt="Product Image">
+      
+                            <!-- <img th:src="${'data:image/jpeg;base64,' + cartItem.product.productImage}" class="product-image" alt="Product Image"> -->
+                            <div class="product-details">
+                                <div><strong>Order Date:</strong> <span th:text="${cartItem.date}"></span></div>
+                                <div><strong>Product Id:</strong> <span th:text="${cartItem.product.productId}"></span></div>
+                                <div><strong>Product Name:</strong> <span th:text="${cartItem.product.productName}"></span></div>
+                                <div><strong>Price:</strong> <span th:text="${cartItem.product.price}"></span></div>
+                                <div><strong>Customer Id:</strong> <span th:text="${cartItem.customerId}"></span></div>
+                                <div><strong>Quantity:</strong> <span th:text="${cartItem.quantity}"></span></div>
+                                <div><strong>Total:</strong> <span th:text="${cartItem.total}"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                <!--  <div class="total-bill">Total Amount Earned: <span th:text="${#numbers.formatDecimal(sum, 2)}"></span></div>  -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (jQuery required) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

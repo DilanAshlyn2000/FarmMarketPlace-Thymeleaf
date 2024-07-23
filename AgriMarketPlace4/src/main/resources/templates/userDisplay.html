@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All User Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px; 
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50; 
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: #666;
+        }
+       
+        tr:hover {
+            background: linear-gradient(to right, #9cf2b0, #ffd166); 
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50; 
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; 
+        }
+
+        .edit-button {
+            background-color: #2196F3;
+        }
+
+        .edit-button:hover {
+            background-color: #1e87db;
+        }
+
+        .delete-button {
+            background-color: red; 
+        }
+
+        .delete-button:hover {
+            background-color: #45a049;
+        }
+
+        .text5 {
+            
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .search-form {
+            text-align: end;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #888888; 
+            border-radius: 3px;
+            font-size: 14px;
+            background-color: #ffffff; 
+            color: #333333; 
+        }
+
+        .search-button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="text5">
+    <h2>
+        <font color="#74ab4f">USER</font> <font color="#74ab4f">DETAILS</font>
+    </h2>
+</div>
+<form th:action="@{/search}" method="get" class="search-form">
+    <input type="text" id="searchTerm" name="name" placeholder="Enter name...">
+    <button type="submit" class="search-button">Search</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>TYPE</th>
+        <th>PHONE NUMBER</th>
+        <th>EMAIL</th>
+        <th>ADDRESS</th>
+        <th>DELETE</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.type}"></td>
+        <td th:text="${user.phone}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.address}"></td>
+        <td>
+            <form action="/deleteUser" method="get">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
